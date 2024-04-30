@@ -1,19 +1,7 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: diavolo <diavolo@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/03 02:47:34 by diavolo           #+#    #+#              #
-#    Updated: 2024/04/07 15:08:28 by diavolo          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-NAME     = ircserv
+NAME     = ircserver
 CC         = c++
-CFLAGS     = -Wall -Wextra -Werror -g3 -std=c++98
-SRCS     =  main.cpp
+CFLAGS     = -Wall -Wextra -Werror -g3 -std=c++98 
+SRCS     =  main.cpp Server.cpp Client.cpp
 OBJ_DIR = obj
 INCLUDES_FOLDER = includes/
 SRC_FOLDER = src/
