@@ -6,7 +6,7 @@
 /*   By: mderkaou <mderkaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:56:58 by lde-mais          #+#    #+#             */
-/*   Updated: 2024/05/01 18:08:33 by mderkaou         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:21:22 by mderkaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void Server::run()
 
 	std::cout << "waiting for connexion on the port " << _port << std::endl;
 
-	pollfds.push_back({_serverSocket, POLLIN});
+	pollfds.push_back((struct pollfd){.fd = _serverSocket, .events = POLLIN});
 
 	while (true){
 		int ret = poll(pollfds.data(), pollfds.size(), -1);
@@ -48,8 +48,8 @@ void Server::run()
 			throw std::logic_error("Poll failed");
 		Client test(_serverSocket);
 		map_client[test.getFd()] = test;
-		pollfds.push_back({test.getFd(), POLLIN});
-		int i = 0;
+		pollfds.push_back((struct pollfd){.fd = test.getFd(), .events = POLLIN});
+		size_t i = 0;
 		if (ret > 0)
 		{
 			while (pollfds[i].revents){
@@ -57,11 +57,10 @@ void Server::run()
 				if (i == 0)
 					Client test2(_serverSocket);
 				std::cout << "Connexion accepted since " << test.getIPAddress() << std::endl;
-				if (pollfds[i].revents & POLLOUT)
-
-				if (pollfds[i].revents & POLLIN);
+				// if (pollfds[i].revents & POLLOUT)
+				if (pollfds[i].revents & POLLIN){
 				while (true){
-					_bytesRead = recv(map_client[test.getFd()].getFd(), &_buff, 1024, MSG_DONTWAIT);
+					_bytesRead = recv(pollfds[i].fd, &_buff, 1024, MSG_DONTWAIT);
 					if (_bytesRead <= 0){
 						if (_bytesRead == 0)
 						{
@@ -74,6 +73,10 @@ void Server::run()
 					_buff[_bytesRead] = '\0';
 					std::cout << "Message from the client: " << _buff << std::endl;
 				}
+				}
+				++i;
+				if (i >= pollfds.size())
+					i = 0;
 			}
 		}
 	}
