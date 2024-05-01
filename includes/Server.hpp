@@ -6,7 +6,7 @@
 /*   By: mderkaou <mderkaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:45:38 by lde-mais          #+#    #+#             */
-/*   Updated: 2024/04/30 17:58:46 by mderkaou         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:50:25 by mderkaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ class Server
 	sockaddr_in _serverAddr;
 	std::map<int, class Client> map_client;
 	std::vector<struct pollfd> pollfds;
-	pollfd fds[1];
 	Server();
 
 	public :

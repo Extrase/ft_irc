@@ -6,7 +6,7 @@
 /*   By: mderkaou <mderkaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:56:58 by lde-mais          #+#    #+#             */
-/*   Updated: 2024/04/30 18:25:22 by mderkaou         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:08:33 by mderkaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,28 @@ void Server::run()
 
 	std::cout << "waiting for connexion on the port " << _port << std::endl;
 
-	fds[0].fd = _serverSocket;
-	fds[0].events = POLLIN;
+	pollfds.push_back({_serverSocket, POLLIN});
 
 	while (true){
-		int ret = poll(fds, 1, -1);
+		int ret = poll(pollfds.data(), pollfds.size(), -1);
 		if (ret == -1)
 			throw std::logic_error("Poll failed");
 		Client test(_serverSocket);
+		map_client[test.getFd()] = test;
+		pollfds.push_back({test.getFd(), POLLIN});
+		int i = 0;
 		if (ret > 0)
 		{
-			if (fds[0].revents & POLLIN){
+			while (pollfds[i].revents){
 
+				if (i == 0)
+					Client test2(_serverSocket);
+				std::cout << "Connexion accepted since " << test.getIPAddress() << std::endl;
+				if (pollfds[i].revents & POLLOUT)
 
-				std::cout << "Connexion accepted since " << ntohs(test.getIPAddress()) << std::endl;
-
+				if (pollfds[i].revents & POLLIN);
 				while (true){
-					_bytesRead = recv(map_client[test.getClientFd()].getClientFd(), &_buff, 1024, MSG_DONTWAIT);
+					_bytesRead = recv(map_client[test.getFd()].getFd(), &_buff, 1024, MSG_DONTWAIT);
 					if (_bytesRead <= 0){
 						if (_bytesRead == 0)
 						{

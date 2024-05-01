@@ -6,7 +6,7 @@
 /*   By: mderkaou <mderkaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:29 by diavolo           #+#    #+#             */
-/*   Updated: 2024/04/30 18:20:16 by mderkaou         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:59:32 by mderkaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ class Client
 	std::string ipClient;
 	std::string nameClient;
     std::string nicknameClient;
-	Client(){};
-	~Client();
 
   public:
-	int getClientFd();
+	Client();
+	int getFd();
 	std::string getIPAddress() const;
     std::string getName();
     std::string getNickname();
 	Client(int serverSocket);
+	~Client();
 };
 
 #endif

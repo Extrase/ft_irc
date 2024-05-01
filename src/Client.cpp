@@ -6,11 +6,13 @@
 /*   By: mderkaou <mderkaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:30:05 by diavolo           #+#    #+#             */
-/*   Updated: 2024/04/30 18:19:58 by mderkaou         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:59:37 by mderkaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Client.hpp"
+
+Client::Client(){}
 
 Client::Client(int serverSocket)
 {
@@ -28,7 +30,7 @@ Client::~Client()
 	close(fd);
 }
 
-int Client::getClientFd()
+int Client::getFd()
 {
 	return (this->fd);
 };
