@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mderkaou <mderkaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diavolo <diavolo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:56:58 by lde-mais          #+#    #+#             */
-/*   Updated: 2024/05/01 19:21:22 by mderkaou         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:35:24 by diavolo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void Server::run()
 
 	std::cout << "waiting for connexion on the port " << _port << std::endl;
 
-	pollfds.push_back((struct pollfd){.fd = _serverSocket, .events = POLLIN});
+	pollfds.push_back((struct pollfd){.fd = _serverSocket, .events = POLLIN, .revents = 0});
 
 	while (true){
 		int ret = poll(pollfds.data(), pollfds.size(), -1);
@@ -48,7 +48,7 @@ void Server::run()
 			throw std::logic_error("Poll failed");
 		Client test(_serverSocket);
 		map_client[test.getFd()] = test;
-		pollfds.push_back((struct pollfd){.fd = test.getFd(), .events = POLLIN});
+		pollfds.push_back((struct pollfd){.fd = test.getFd(), .events = POLLIN, .revents = 0});
 		size_t i = 0;
 		if (ret > 0)
 		{
