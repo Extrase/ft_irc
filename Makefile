@@ -1,32 +1,44 @@
-NAME     = ircserver
-CC         = c++
-CFLAGS     = -Wall -Wextra -Werror -g3 -std=c++98 
-SRCS     =  main.cpp Server.cpp Client.cpp
-OBJ_DIR = obj
-INCLUDES_FOLDER = includes/
-SRC_FOLDER = src/
+NAME =          irc
 
-HEADERS       = $(wildcard $(INCLUDES_FOLDER)*.hpp)
+CC =            c++
 
-OBJS    = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
+C++FLAGS =		-Wall -Wextra -Werror -std=c++98
 
-all : $(NAME)
+INC =	include
 
-$(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+SRC =	main.cpp\
+		src/Server.cpp\
+		src/Auth.cpp\
+		src/Client.cpp\
+		src/Salon.cpp\
+		src/Parse.cpp\
+		cmd/INVITE.cpp\
+		cmd/JOIN.cpp\
+		cmd/KICK.cpp\
+		cmd/MODE.cpp\
+		cmd/PART.cpp\
+		cmd/PRIVMSG.cpp\
+		cmd/QUIT.cpp\
+		cmd/TOPIC.cpp\
 
-$(OBJ_DIR)/%.o: $(SRC_FOLDER)%.cpp $(HEADERS) | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+OBJ = $(SRC:.cpp=.o)
 
-$(OBJ_DIR):
-	mkdir -p $@
+all: $(NAME)
+		@echo "Compiled !"
+
+$(NAME): $(OBJ)
+		@$(CC) $(C++FLAGS) $(OBJ) -o $(NAME)
+
+%.o: %.cpp
+	@$(CC) $(C++FLAGS) -I $(INC) -o $@ -c $<
 
 clean:
-	rm -f $(OBJS)
+				${RM} ${OBJ}
 
-fclean: clean
-	rm -f $(NAME)
+fclean:
+				${RM} ${OBJ}
+				rm -f ${NAME}
 
-re: fclean all
+re:         	fclean all
 
-.PHONY:			all clean fclean re
+.PHONY:        all clean fclean re
