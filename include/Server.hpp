@@ -94,7 +94,7 @@ Salon *GetSalon(std::string name)
 	return NULL;
 }
 
-void Launch(int port, std::string pass);
+void Launch();
 void Init_server();
 void newClient();
 void ft_error(std::string reason);

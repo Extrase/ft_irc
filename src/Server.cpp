@@ -64,11 +64,9 @@ void Server::Init_server()
 
 }
 
-void Server::Launch(int port, std::string pass)
+void Server::Launch()
 {
 	int	n_events;
-	this->_password = pass;
-	this->_port = port;
 
 
 	Init_server();

@@ -22,7 +22,7 @@ int main(int ac, char **av)
 		signal(SIGINT, Server::SignalHandler);
 		signal(SIGQUIT, Server::SignalHandler);
 		signal(SIGPIPE, SIG_IGN);
-		serv.Launch(std::atoi(av[1]), av[2]);
+		serv.Launch();
 	}
 	catch(const std::exception& e)
 	{
